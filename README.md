@@ -1,103 +1,179 @@
-# Antigravity AI 🛰️
+# 🛰️ Antigravity AI — Unit Test Case Generator
 
-## Autonomous Test Generation & Repair Agent
+> **Automatically generate, execute, and repair unit tests for any Python GitHub repository using Google Gemini AI.**
 
-**Antigravity AI** is a state-of-the-art autonomous testing agent designed to take any Python repository and automatically generate, verify, and repair unit tests. Powered by **Google Gemini 1.5 Flash**, it uses a self-healing loop to analyze test failures and iteratively fix them until they pass and achieve high code coverage.
-
-![Project Preview](https://github.com/sohail9972/Antigravity_Application/blob/main/frontend/screenshot.png) *(Placeholder if you add a screenshot)*
+Built for the **Hack2Skill Hackathon 2026**, Antigravity AI is a full-stack autonomous agent that takes a GitHub repository URL as input and produces a fully passing, high-coverage **unit test suite** — without any manual intervention.
 
 ---
 
-## ✨ Features
+## 🎯 What Does It Do?
 
-- 🧠 **Autonomous Repair Loop**: Real-time reasoning to generate, execute, and fix unit tests automatically.
-- 💎 **Premium Glassmorphism UI**: High-aesthetic modern design with live-scrolling logs and a status timeline.
-- 🔐 **Multi-user Authentication**: Secure Sign-in and Sign-up functionality with JWT and bcrypt-hashed passwords.
-- 📜 **Historical Analysis**: Every test run is saved to a persistent SQLite database for later review.
-- 🔍 **Intelligent File Selection**: Automatically scans repositories to find the most critical logic files for testing.
-- 📊 **Coverage Tracking**: Real-time extraction of actual code coverage using `pytest-cov`.
+Simply paste the URL of any Python GitHub repository and Antigravity AI will:
+
+1. **Clone** the repository automatically.
+2. **Scan & Select** the most important Python source file to test.
+3. **Generate** a complete unit test file using Google Gemini 1.5 Flash.
+4. **Execute** the tests and capture all pass/fail output.
+5. **Repair** any failing tests intelligently by feeding results back into the AI.
+6. **Repeat** the loop (up to 5 iterations) until all tests pass.
+7. **Report** the final code coverage and generated tests in a beautiful UI.
+
+---
+
+## ✨ Key Features
+
+| Feature | Description |
+|---|---|
+| 🤖 **AI-Powered Generation** | Uses Google Gemini 1.5 Flash to reason about code and write accurate tests |
+| 🔁 **Self-Healing Loop** | If tests fail, the AI reads the errors and repairs the tests automatically |
+| 📊 **Coverage Reports** | Extracts real code coverage % using pytest-cov |
+| 🔐 **User Authentication** | Secure Sign Up / Sign In with JWT tokens and bcrypt password hashing |
+| 🗂️ **Personal Workspace** | Each user has an isolated history of all their past test generation sessions |
+| 💎 **Premium UI** | Glassmorphism design with live log streaming and real-time status indicators |
+| 📜 **Persistent History** | All generated test suites are stored in a database for later review |
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Backend
-- **Framework**: FastAPI (Python 3.10+)
-- **AI Integration**: Google Generative AI (Gemini 1.5 Flash)
-- **Database**: SQLModel with SQLite
-- **Security**: JWT Authentication / Passlib
-- **Testing**: Pytest & Pytest-Cov
+| Library | Purpose |
+|---|---|
+| **FastAPI** | High-performance REST API framework |
+| **Google Generative AI** | Gemini 1.5 Flash for unit test generation & repair |
+| **SQLModel + SQLite** | Lightweight database for users and task history |
+| **Pytest + Pytest-Cov** | Test execution engine and coverage measurement |
+| **PassLib + Python-Jose** | Secure password hashing and JWT session management |
+| **GitPython** | Programmatic repository cloning |
 
 ### Frontend
-- **Framework**: React.js (Vite)
-- **Styling**: Vanilla CSS (Premium Glassmorphism Theme)
-- **Utilities**: Lucide Icons (Optional/System Fonts)
+| Library | Purpose |
+|---|---|
+| **React.js (Vite)** | Fast and reactive UI framework |
+| **Vanilla CSS** | Custom glassmorphism design system |
+| **Server-Sent Events** | Real-time log streaming from backend to browser |
 
 ---
 
 ## 🚀 Getting Started
 
-### 📝 Prerequisites
+### Prerequisites
 - Python 3.10+
 - Node.js & npm
 - Git
 
-### 🔧 Installation
-
-1. **Clone the Repo**:
-   ```bash
-   git clone https://github.com/sohail9972/Antigravity_Application.git
-   cd Antigravity_Application
-   ```
-
-2. **Backend Setup**:
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   ```
-
-3. **Frontend Setup**:
-   ```bash
-   cd ../frontend
-   npm install
-   ```
-
-### 🗝️ Configuration
-Create a `.env` file in the `backend/` directory and add your Google Gemini API key:
-```env
-GOOGLE_API_KEY=your_gemini_key_here
-JWT_SECRET=your_secret_here
+### 1. Clone the Repository
+```bash
+git clone https://github.com/sohail9972/Antigravity_Application.git
+cd Antigravity_Application
 ```
 
-### 🏃 Running the Application
-Use our all-in-one launch script from the root directory:
+### 2. Install Backend Dependencies
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+### 3. Install Frontend Dependencies
+```bash
+cd ../frontend
+npm install
+```
+
+### 4. Configure Environment Variables
+Create a `.env` file inside the `backend/` folder:
+```env
+GOOGLE_API_KEY=your_google_gemini_api_key
+JWT_SECRET=any_secret_string_you_choose
+```
+> 🔑 Get your free Gemini API key from [Google AI Studio](https://aistudio.google.com/)
+
+### 5. Launch the Application
+From the **root** directory, run the all-in-one launcher:
 ```bash
 python start_app.py
 ```
-Then navigate to: **http://localhost:5173**
+Then open your browser at: **http://localhost:5173**
 
 ---
 
-## 📖 How it Works
+## 🔄 How the Test Generation Loop Works
 
-1. **Input**: User pastes a GitHub repository URL.
-2. **Clone**: The agent clones the repository into an isolated workspace.
-3. **Analyze**: It identifies the primary logic file using a size-based heuristic.
-4. **Reasoning**: Gemini 1.5 Flash analyzes the source code and generates a full test suite.
-5. **Repair Loop**:
-   - Executes tests using `pytest`.
-   - If tests fail, the stderr and logs are sent back to the AI.
-   - The AI identifies the failure root cause and fixes the test case.
-   - Repeat (up to 5 iterations) until 100% pass rate is reached.
-6. **Persistence**: Final results, coverage, and repair iteration logs are saved to your private dashboard.
+```
+User Input (GitHub URL)
+        │
+        ▼
+  Clone Repository
+        │
+        ▼
+Scan & Select Target Python File
+  (Largest non-test source file)
+        │
+        ▼
+  Gemini Analyzes Source Code
+  → Generates Unit Test File
+        │
+        ▼
+   Pytest Runs Tests
+        │
+     ┌──┴──┐
+   PASS    FAIL
+     │       │
+     │  Gemini Reads Error Logs
+     │  → Repairs Failing Tests
+     │       │
+     │   Loop (max 5x)
+     │       │
+     └───────┘
+        │
+        ▼
+  Final Report Saved
+  (Coverage + Test Code)
+```
+
+---
+
+## 📂 Project Structure
+
+```
+Antigravity_Application/
+├── backend/
+│   ├── agent.py           # 🤖 Core AI loop (generate & repair tests)
+│   ├── main.py            # 🚀 FastAPI server, Auth & API endpoints
+│   ├── database.py        # 🗄️  SQLite models (User, Task)
+│   └── requirements.txt   # 📦 Python dependencies
+├── frontend/
+│   └── src/
+│       ├── App.jsx        # ⚛️  Main React component (UI & routing)
+│       └── index.css      # 💎 Premium glassmorphism styles
+├── start_app.py           # ▶️  One-click launcher for both servers
+├── .gitignore
+└── README.md
+```
+
+---
+
+## 📡 API Endpoints
+
+| Method | Endpoint | Auth Required | Description |
+|---|---|---|---|
+| `POST` | `/api/auth/register` | ❌ | Create a new user account |
+| `POST` | `/api/auth/login` | ❌ | Login and receive JWT token |
+| `GET` | `/api/auth/me` | ✅ | Get current user details |
+| `POST` | `/api/analyze` | ✅ | Start test generation for a repo |
+| `GET` | `/api/stream/{task_id}` | ❌ | Stream live agent logs (SSE) |
+| `GET` | `/api/tasks` | ✅ | List all your past test runs |
+| `GET` | `/api/tasks/{task_id}` | ✅ | Get full details of a past run |
+| `DELETE` | `/api/tasks/{task_id}` | ✅ | Delete a task from your history |
 
 ---
 
 ## 👨‍💻 Author
-**Sohail**
-Built for Hack2Skill Hackathon 2026.
+
+**Sohail** — Built for the Hack2Skill Hackathon 2026.
 
 ---
 
 ## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+This project is licensed under the **MIT License**.
