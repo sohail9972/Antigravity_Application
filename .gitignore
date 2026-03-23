@@ -9,6 +9,9 @@ backend/repos/
 backend/__pycache__/
 backend/.pytest_cache/
 .env
+backend/.env
 .DS_Store
 dist/
 build/
+*.db
+antigravity.db
